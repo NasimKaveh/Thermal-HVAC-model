@@ -1,0 +1,5 @@
+name: thermo
+channels:
+  - defaults
+prefix: C:\Users\hkhad\Anaconda3\envs\thermo
+
