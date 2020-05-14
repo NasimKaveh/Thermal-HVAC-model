@@ -55,11 +55,11 @@ class Room:
 
     
 def p_controller(error):
-    p_gain=0.07
+    p_gain=0.025
     return p_gain*error
 
 def I_controller(errorI):
-    I_gain=0.01
+    I_gain=0.02
     return I_gain*errorI
 
 if __name__ == "__main__":
@@ -69,6 +69,8 @@ if __name__ == "__main__":
     n_iter = 500
     Tin = np.empty(n_iter)
     Tset = (x.T_set) * np.ones_like(Tin)
+    T_set_hi = Tset + 0.5
+    T_set_lo = Tset - 0.5
     t = np.empty(n_iter)
     errorI = 0
 
@@ -77,7 +79,7 @@ if __name__ == "__main__":
         errorI += error
         control_signal = p_controller(error) + I_controller(errorI)
         
-        if abs(error) > 0.1:
+        if abs(error) > 0.5:
             current_action = control_signal  # choose a power proportional to the gain
         else:
             current_action = 0
@@ -90,7 +92,13 @@ if __name__ == "__main__":
             #time.sleep(1)
             x.reset(T_in = np.random.randint(20,40))    
         #print(current_action, x.T_in)
-    plt.plot(t, Tin, 'r--', t, Tset, 'bs')
+    plt.plot(t, Tin, 'b--', label='T_in')
+    plt.plot(t, Tset, 'g--', label='T_set')
+    plt.plot(t, T_set_hi, 'k--', label='T_set_hi')
+    plt.plot(t, T_set_lo, 'k--', label='T_set_lo')
+    plt.xlabel('Iteration time (min)')
+    plt.ylabel('Temperature (deg. C)')
+    plt.legend()
     plt.show()
 
 

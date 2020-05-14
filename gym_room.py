@@ -55,13 +55,20 @@ class GymACRoom(gym.Env):
             done = False
         
         #Reward function
+
+        #reward NoOffSet
+        reward = np.exp(-(abs(10*self.observation)))
+
+        #reward NoOffSet
+        #reward = np.exp(-(abs(self.observation)))
+
+        #Reward with Offset
+        '''
         if abs(self.observation) < 0.5:
             reward = 1
         else:
             reward = np.exp(-(abs(self.observation)-0.5))
-        
-   # plt.plot(reward, self.observation)
-    #plt.show()
+        '''
         info = {}
 
         return self.observation, reward, done, info
@@ -101,7 +108,7 @@ if __name__ == "__main__":
             model = PPO2(policy = 'CustomPolicy', env=env, verbose=1, learning_rate=lr, n_steps=1280, tensorboard_log="./AC_tensorboard/")
             model.learn(total_timesteps = 1000000)
             #model.save("AC_PPO2_LR_exp"+str(lr)+".zip")
-            model.save("AC_PPO2_LR_exp.zip")
+            model.save("AC_PPO2_exp_neg_noOffset.zip")
         
         '''
         # scheduling learning rate
@@ -134,6 +141,8 @@ if __name__ == "__main__":
         n_iter = 1000
         TinRL = np.empty(n_iter)
         Tset = (env.AC_sim.T_set) * np.ones_like(TinRL)
+        T_Off_high = Tset + 0.5
+        T_Off_low = Tset - 0.5
         t = np.empty(n_iter)
         Tin = np.empty(n_iter)
         errorI = 0
@@ -153,7 +162,7 @@ if __name__ == "__main__":
             errorI += error
             control_signal = p_controller(error) + I_controller(errorI)
             
-            if abs(error) > 0.1:
+            if abs(error) > 0.5:
                 current_action = control_signal   # choose a power proportional to the gain
             else:
                 current_action = 0
@@ -169,6 +178,8 @@ if __name__ == "__main__":
         plt.plot(t, TinRL, 'r--', label='RL_PPO2')
         plt.plot(t, Tin, 'b--', label='PI')
         plt.plot(t, Tset, 'g--', label='Tset')
+        plt.plot(t, T_Off_high, 'k--', label='T_set_hi')
+        plt.plot(t, T_Off_low, 'k--', label='T_set_lo')
         plt.xlabel('Iteration time (min)')
         plt.ylabel('Temperature (deg. C)')
         plt.legend()
