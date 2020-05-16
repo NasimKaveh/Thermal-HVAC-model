@@ -1,4 +1,4 @@
-# ReadMe
+# Thermal HVAC Model
 
 ## Objective
 The aim of this project is to model an environment room and maintain its inside temperature within a given threshold by controlling the amount of heat to or from the system using two different methods: a) traditional Proportional Integral (PI) controller, b) Reinforcement Learning methods.
