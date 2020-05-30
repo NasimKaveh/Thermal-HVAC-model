@@ -1,7 +1,9 @@
 # Thermal HVAC Model
 
 ## Objective
-The aim of this project is to model an environment room and maintain its inside temperature within a given threshold by controlling the amount of heat to or from the system using two different methods: a) traditional Proportional Integral (PI) controller, b) Reinforcement Learning methods.
+The aim of this project is to model an environment room and maintain its inside temperature within a given threshold by controlling the amount of heat to or from the system using two different methods: a) classical Proportional Integral (PI) controller, b) Reinforcement Learning methods.
+
+Results show that the Reinforcement Learning method outperforms the classical PI controller.
 
 ## Thermal Environment 
 The thermal envrionment is represented by a lumped-capacitance model following the 1st law of thermodynamics based on conservation of evergy for a stationary closed system: 
