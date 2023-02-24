@@ -65,7 +65,7 @@ Argparse has been used to define the mode train or predict:
 
 To **_train_** this model use the following command:
 
-> python gym_room.py --mode "tain"
+> python gym_room.py --mode "train"
 
 To **_predict_** the model use the following command:
 
@@ -84,7 +84,7 @@ The RL is a more robust controller as it is seen in the results.
 
 To **_train_** this model use the following command:
 
-> python gym_room_discrete.py --mode "tain"
+> python gym_room_discrete.py --mode "train"
 
 To **_predict_** the model use the following command:
 
